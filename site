@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ШуруМоб — Форум самодельных электромобилей</title>
+<style>
+:root{--bg:#0f1216;--panel:#171c23;--panel2:#1e242e;--accent:#ffb400;--accent2:#3ad0a5;--text:#e8edf3;--muted:#8b95a3;--line:#2a3240;--red:#c0392b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+header{background:linear-gradient(90deg,#171c23,#1e242e);border-bottom:2px solid var(--accent);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-size:1.4rem;font-weight:800;color:var(--accent)}
+.logo span{color:var(--accent2)}
+.badge{background:var(--accent);color:#111;border-radius:12px;padding:2px 10px;font-size:.75rem;font-weight:800}
+.admin-badge{background:var(--red);color:#fff;border-radius:12px;padding:2px 10px;font-size:.75rem;font-weight:800}
+.scheme{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;font-size:.8rem}
+.scheme .node{background:var(--panel2);border:1px solid var(--accent);border-radius:8px;padding:6px 10px;text-align:center}
+.scheme .arr{color:var(--accent);font-weight:800}
+nav{display:flex;gap:18px;margin-left:auto;align-items:center;flex-wrap:wrap}
+nav a{color:var(--muted);font-weight:600}
+nav a:hover{color:var(--accent)}
+main{max-width:1000px;margin:24px auto;padding:0 16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+h1{font-size:1.6rem;margin-bottom:6px}
+h2{font-size:1.2rem;margin-bottom:12px;color:var(--accent)}
+.muted{color:var(--muted);font-size:.9rem}
+button,.btn{background:var(--accent);color:#111;border:none;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:.95rem;display:inline-block}
+button:hover,.btn:hover{background:#ffc833}
+.btn-sec{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.btn-danger{background:#5a2424;color:#ffb3b3;border:1px solid #a33;font-size:.72rem;padding:3px 8px}
+input,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.95rem;margin-bottom:12px;font-family:inherit}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+label{font-size:.85rem;color:var(--muted);display:block;margin-bottom:4px}
+.thread{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;gap:10px;flex-wrap:wrap;cursor:pointer}
+.thread:hover{border-color:var(--accent)}
+.thread-title{font-weight:700;font-size:1.05rem}
+.meta{font-size:.8rem;color:var(--muted)}
+.msg{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin-bottom:10px}
+.msg-head{display:flex;gap:10px;align-items:baseline;margin-bottom:6px;flex-wrap:wrap}
+.msg-author{font-weight:800;color:var(--accent2)}
+.msg-time{font-size:.75rem;color:var(--muted)}
+.error{background:#4a1f1f;border:1px solid #a33;color:#ffb3b3;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:.9rem}
+.ok{background:#1f4a38;border:1px solid #3ad0a5;color:#b3ffd9;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:.9rem}
+.back{color:var(--muted);font-size:.85rem;display:inline-block;margin-bottom:12px}
+.footer{text-align:center;color:var(--muted);font-size:.8rem;padding:24px}
+.tag{display:inline-block;background:#243044;color:var(--accent2);border-radius:6px;padding:2px 8px;font-size:.75rem;margin-right:6px}
+.hidden{display:none !important}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button{background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.tabs button.active{background:var(--accent);color:#111;border-color:var(--accent)}
+table{width:100%;border-collapse:collapse}
+td,th{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" onclick="showPage('home')">🔧 Шуру<span>Моб</span> <span class="badge">ФОРУМ</span></a>
+  <div class="scheme">
+    <div class="node">⚡ Шуруповёрт</div><div class="arr">→</div>
+    <div class="node">🛠 Двигатель (3D)</div><div class="arr">→</div>
+    <div class="node">⚙️ КПП (3D)</div><div class="arr">→</div>
+    <div class="node">🛞 Колёса</div>
+  </div>
+  <nav id="nav"></nav>
+</header>
+
+<main>
+  <!-- ГЛАВНАЯ -->
+  <section id="page-home">
+    <div class="card">
+      <h1>Форум владельцев шуруповёрт-мобилей 🚗💨</h1>
+      <p class="muted">Машины из шуруповёрта, 3D-принтера и упрямства. Делитесь схемами, фото,
+      болями КПП из PETG и победами над сцеплением.</p>
+    </div>
+    <div class="card">
+      <h2>Разделы форума</h2>
+      <div id="sections"></div>
+    </div>
+    <div class="card" id="recent-card" style="display:none">
+      <h2>🔥 Свежие темы</h2>
+      <div id="recent"></div>
+    </div>
+  </section>
+
+  <!-- РАЗДЕЛ -->
+  <section id="page-section" class="hidden">
+    <a class="back" onclick="showPage('home')">← На главную</a>
+    <div class="card">
+      <h2 id="section-title"></h2>
+      <div id="threads"></div>
+      <div id="new-thread" class="hidden">
+        <input id="thread-title" placeholder="Название темы">
+        <input id="thread-first" placeholder="Первое сообщение (опиши вопрос или тему)">
+        <button onclick="createThread()">Создать тему</button>
+      </div>
+      <p id="login-hint" class="muted hidden" style="margin-top:10px">🔒 Чтобы создавать темы и писать сообщения — <a onclick="showPage('auth');switchTab('login')">войдите</a> или <a onclick="showPage('auth');switchTab('register')">зарегистрируйтесь</a>.</p>
+    </div>
+  </section>
+
+  <!-- ТЕМА -->
+  <section id="page-thread" class="hidden">
+    <a class="back" id="back-to-section">← К разделу</a>
+    <div class="card">
+      <h2 id="thread-title"></h2>
+      <p class="muted" id="thread-meta"></p>
+    </div>
+    <div id="messages"></div>
+    <div class="card" id="reply-box">
+      <h2>✉️ Ответить</h2>
+      <div id="reply-error" class="error hidden"></div>
+      <textarea id="reply-text" rows="4" placeholder="Ваше сообщение..."></textarea>
+      <button onclick="sendMessage()">Отправить</button>
+    </div>
+  </section>
+
+  <!-- АВТОРИЗАЦИЯ -->
+  <section id="page-auth" class="hidden">
+    <div class="card" style="max-width:420px;margin:0 auto">
+      <div class="tabs">
+        <button id="tab-login" class="active" onclick="switchTab('login')">Вход</button>
+        <button id="tab-register" onclick="switchTab('register')">Регистрация</button>
+      </div>
+      <div id="auth-error" class="error hidden"></div>
+      <div id="auth-ok" class="ok hidden"></div>
+      <div id="form-login">
+        <label>Логин</label><input id="login-name">
+        <label>Пароль</label><input id="login-pass" type="password">
+        <button onclick="doLogin()">Войти</button>
+      </div>
+      <div id="form-register" class="hidden">
+        <label>Логин</label><input id="reg-name" placeholder="Например: Шуруповерт_Алекс">
+        <label>Пароль</label><input id="reg-pass" type="password">
+        <label>Машина (марка самоделки)</label><input id="reg-car" placeholder="Например: ШуруМобиль МК-1">
+        <button onclick="doRegister()">Создать аккаунт</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРОФИЛЬ -->
+  <section id="page-profile" class="hidden">
+    <div class="card" style="max-width:480px;margin:0 auto">
+      <h2>👤 Мой профиль</h2>
+      <p><b>Логин:</b> <span id="profile-name"></span> <span id="profile-admin" class="admin-badge hidden">АДМИН</span></p>
+      <p><b>Машина:</b> <span id="profile-car"></span></p>
+      <p><b>Сообщений:</b> <span id="profile-posts"></span></p>
+      <br>
+      <button class="btn-sec" onclick="logout()">Выйти из аккаунта</button>
+    </div>
+    <div class="card hidden" id="admin-panel">
+      <h2>🛠 Панель администратора</h2>
+      <table id="users-table"></table>
+    </div>
+  </section>
+</main>
+
+<div class="footer">ШуруМоб Форум — собрано на шуруповёрте и 3D-принтере 🔧</div>
+
+<script>
+/* ===== ДАННЫЕ (localStorage). ⚠️ Это статическая версия: данные хранятся
+   только в браузере каждого посетителя и НЕ синхронизируются между людьми! ===== */
+const ADMIN_USERNAME = "Davestrov";  // этот пользователь всегда админ
+const DB = {
+  get(k,d){ try{ const v=JSON.parse(localStorage.getItem('shurumob_'+k)); return v==null?d:v }catch(e){return d} },
+  set(k,v){ localStorage.setItem('shurumob_'+k, JSON.stringify(v)) }
+};
+const SECTIONS = [
+  {id:'build',  name:'🔨 Постройка',               desc:'Каркас, подвеска, посадка мотора на шуруповёрт'},
+  {id:'engine', name:'🛠 Поршневой двигатель (3D)', desc:'Печать поршней, колец, картеров. Материалы и зазоры'},
+  {id:'kpp',    name:'⚙️ КПП с 3D-принтера',        desc:'Шестерни, синхронизаторы, чем смазывать PLA'},
+  {id:'elec',   name:'⚡ Электрика и АКБ',          desc:'Контроллеры, Li-ion сборки, проводка'},
+  {id:'road',   name:'🛞 Тесты на дороге',          desc:'Первый выезд, замеры, поломки и починка'},
+  {id:'off',    name:'💬 Болталка',                 desc:'Фото, мемы, споры «шуруповёрт vs мотор-колесо»'}
+];
+DB.set('threads', DB.get('threads', []));  // без заглушек — форум чистый
+
+let currentUser = DB.get('session', null);
+let curSection = null, curThread = null;
+
+/* ===== НАВИГАЦИЯ ===== */
+function showPage(p){
+  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById('page-'+p).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function renderNav(){
+  const n = document.getElementById('nav');
+  if(currentUser){
+    n.innerHTML = '<a onclick="showProfile()">👤 '+esc(currentUser.name)+
+      (currentUser.admin?' <span class="admin-badge">АДМИН</span>':'')+'</a>'+
+      '<a onclick="logout()">Выйти</a>';
+  } else {
+    n.innerHTML = '<a onclick="showPage(\'auth\');switchTab(\'login\')">Войти</a>'+
+                  '<a onclick="showPage(\'auth\');switchTab(\'register\')">Регистрация</a>';
+  }
+}
+
+/* ===== ГЛАВНАЯ ===== */
+function renderHome(){
+  document.getElementById('sections').innerHTML = SECTIONS.map(s=>{
+    const cnt = DB.get('threads',[]).filter(t=>t.sec===s.id).length;
+    return '<div class="thread" onclick="openSection(\''+s.id+'\')">'+
+      '<div><div class="thread-title">'+s.name+'</div><div class="muted">'+s.desc+'</div></div>'+
+      '<div class="meta">📝 '+cnt+' тем</div></div>';
+  }).join('');
+  const recent = [...DB.get('threads',[])].sort((a,b)=>b.time-a.time).slice(0,10);
+  document.getElementById('recent-card').style.display = recent.length?'block':'none';
+  document.getElementById('recent').innerHTML = recent.map(t=>{
+    const s = SECTIONS.find(x=>x.id===t.sec);
+    return '<div class="thread" onclick="openThread('+t.id+')">'+
+      '<div><span class="tag">'+s.name+'</span><span class="thread-title">'+esc(t.title)+'</span></div>'+
+      '<div class="meta">💬 '+t.msgs.length+' · '+esc(t.author)+' · '+fmt(t.time)+'</div></div>';
+  }).join('');
+}
+
+/* ===== РАЗДЕЛ ===== */
+function openSection(id){
+  curSection = id;
+  const s = SECTIONS.find(x=>x.id===id);
+  document.getElementById('section-title').textContent = s.name;
+  const ts = DB.get('threads',[]).filter(t=>t.sec===id).sort((a,b)=>b.time-a.time);
+  document.getElementById('threads').innerHTML = ts.length ? ts.map(t=>
+    '<div class="thread" onclick="openThread('+t.id+')">'+
+    '<div class="thread-title">'+esc(t.title)+'</div>'+
+    '<div class="meta">💬 '+t.msgs.length+' · '+esc(t.author)+' · '+fmt(t.time)+
+    (currentUser&&currentUser.admin?
+      ' <button class="btn-danger" onclick="event.stopPropagation();adminDelThread('+t.id+')">🗑</button>':'')+
+    '</div></div>'
+  ).join('') : '<p class="muted">Здесь пока тихо. Создай тему первым!</p>';
+  document.getElementById('new-thread').classList.toggle('hidden', !currentUser);
+  document.getElementById('login-hint').classList.toggle('hidden', !!currentUser);
+  showPage('section');
+}
+function createThread(){
+  const title = document.getElementById('thread-title').value.trim();
+  const first = document.getElementById('thread-first').value.trim();
+  if(!title || !first){ alert('Заполни название и первое сообщение'); return; }
+  const ts = DB.get('threads',[]);
+  const t = {id:Date.now(), sec:curSection, title, author:currentUser.name, time:Date.now(), msgs:[{a:currentUser.name,m:first,t:Date.now()}]};
+  ts.push(t); DB.set('threads', ts);
+  document.getElementById('thread-title').value='';
+  document.getElementById('thread-first').value='';
+  openThread(t.id);
+}
+function adminDelThread(id){
+  if(!confirm('Удалить тему целиком?')) return;
+  DB.set('threads', DB.get('threads',[]).filter(t=>t.id!==id));
+  openSection(curSection);
+}
+
+/* ===== ТЕМА ===== */
+function openThread(id){
+  curThread = id;
+  const t = DB.get('threads',[]).find(x=>x.id===id);
+  if(!t) return;
+  document.getElementById('thread-title').textContent = t.title;
+  document.getElementById('thread-meta').textContent = 'Автор: '+t.author+' · '+fmt(t.time)+' · 💬 '+t.msgs.length+' сообщений';
+  document.getElementById('back-to-section').onclick = ()=>openSection(t.sec);
+  document.getElementById('messages').innerHTML = t.msgs.map((m,i)=>
+    '<div class="msg"><div class="msg-head"><span class="msg-author">'+esc(m.a)+'</span>'+
+    '<span class="msg-time">'+fmt(m.t)+'</span>'+
+    (currentUser&&currentUser.admin?
+      '<button class="btn-danger" onclick="adminDelMsg('+t.id+','+i+')">🗑 удалить</button>':'')+
+    '</div><div>'+esc(m.m).replace(/\n/g,'<br>')+'</div></div>'
+  ).join('') || '<p class="muted">Сообщений пока нет.</p>';
+  const rb = document.getElementById('reply-box');
+  if(currentUser){
+    rb.innerHTML = '<h2>✉️ Ответить</h2><div id="reply-error" class="error hidden"></div>'+
+      '<textarea id="reply-text" rows="4" placeholder="Ваше сообщение..."></textarea>'+
+      '<button onclick="sendMessage()">Отправить</button>';
+  } else {
+    rb.innerHTML = '<p class="muted">🔒 <a onclick="showPage(\'auth\');switchTab(\'login\')">Войдите</a>, чтобы отправлять сообщения.</p>';
+  }
+  showPage('thread');
+}
+function sendMessage(){
+  const txt = document.getElementById('reply-text').value.trim();
+  const err = document.getElementById('reply-error');
+  if(!currentUser){ err.textContent='Сначала войдите в аккаунт.'; err.classList.remove('hidden'); return; }
+  if(!txt){ err.textContent='Введите текст сообщения.'; err.classList.remove('hidden'); return; }
+  err.classList.add('hidden');
+  const ts = DB.get('threads',[]);
+  const t = ts.find(x=>x.id===curThread);
+  t.msgs.push({a:currentUser.name, m:txt, t:Date.now()});
+  t.time = Date.now();
+  DB.set('threads', ts);
+  openThread(curThread);
+}
+function adminDelMsg(tid, idx){
+  if(!confirm('Удалить сообщение?')) return;
+  const ts = DB.get('threads',[]);
+  const t = ts.find(x=>x.id===tid);
+  t.msgs.splice(idx,1);
+  if(t.msgs.length===0){ DB.set('threads', ts.filter(x=>x.id!==tid)); openSection(t.sec); return; }
+  DB.set('threads', ts);
+  openThread(tid);
+}
+
+/* ===== АККАУНТЫ ===== */
+function switchTab(tab){
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('form-login').classList.toggle('hidden', tab!=='login');
+  document.getElementById('form-register').classList.toggle('hidden', tab!=='register');
+  document.getElementById('auth-error').classList.add('hidden');
+  document.getElementById('auth-ok').classList.add('hidden');
+}
+function authErr(m){ const e=document.getElementById('auth-error'); e.textContent=m; e.classList.remove('hidden'); }
+function authOk(m){ const e=document.getElementById('auth-ok'); e.textContent=m; e.classList.remove('hidden'); }
+function doRegister(){
+  const name = document.getElementById('reg-name').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  const car  = document.getElementById('reg-car').value.trim() || '—';
+  if(name.length<3 || name.length>30) return authErr('Логин должен быть от 3 до 30 символов.');
+  if(pass.length<4) return authErr('Пароль минимум 4 символа.');
+  const users = DB.get('users',{});
+  if(users[name]) return authErr('Такой логин уже занят.');
+  const admin = (name === ADMIN_USERNAME) ? 1 : 0;
+  users[name] = {pass, car, admin};
+  DB.set('users', users);
+  authOk(admin ? '👑 Аккаунт создан! Вы администратор. Теперь войдите.' : 'Аккаунт создан! Теперь войдите.');
+  switchTab('login');
+  document.getElementById('login-name').value = name;
+}
+function doLogin(){
+  const name = document.getElementById('login-name').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const users = DB.get('users',{});
+  if(!users[name] || users[name].pass!==pass) return authErr('Неверный логин или пароль.');
+  currentUser = {name, car:users[name].car, admin:!!users[name].admin};
+  DB.set('session', currentUser);
+  renderNav(); showPage('home');
+}
+function logout(){
+  currentUser = null; localStorage.removeItem('shurumob_session');
+  renderNav(); showPage('home');
+}
+function showProfile(){
+  const ts = DB.get('threads',[]);
+  const cnt = ts.reduce((n,t)=>n+t.msgs.filter(m=>m.a===currentUser.name).length,0);
+  document.getElementById('profile-name').textContent = currentUser.name;
+  document.getElementById('profile-admin').classList.toggle('hidden', !currentUser.admin);
+  document.getElementById('profile-car').textContent = currentUser.car;
+  document.getElementById('profile-posts').textContent = cnt;
+  const panel = document.getElementById('admin-panel');
+  if(currentUser.admin){
+    const users = DB.get('users',{});
+    document.getElementById('users-table').innerHTML =
+      '<tr><th>Логин</th><th>Машина</th><th>Админ</th></tr>' +
+      Object.entries(users).map(([n,u])=>
+        '<tr><td>'+esc(n)+'</td><td>'+esc(u.car||'—')+'</td><td>'+(u.admin?'✅':'—')+'</td></tr>').join('');
+    panel.classList.remove('hidden');
+  } else panel.classList.add('hidden');
+  showPage('profile');
+}
+
+/* ===== УТИЛИТЫ ===== */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fm
